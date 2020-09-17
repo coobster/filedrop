@@ -1,0 +1,15 @@
+<html><body><div style="width:100%;height:100%">
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+<input type="file" id="uploadImage" name="file" style="display:none;">
+<br><div id="sub" style="border:3px solid black;background:#e0d7e9;color:white;
+width:60%;height:60%;align:center;v-align:middle;">
+<h1>Click to Upload Files</h1><p>
+Upload your file and get a single use URL download for 24 hours.</div>
+</form></div>
+
+<script>
+	$("document").ready(function() { $("#uploadImage").change(function() { $('form').submit();});});
+    $("#sub").on("click", function() { $("#uploadImage").trigger("click"); });
+</script>
+</html>

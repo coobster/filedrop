@@ -1,5 +1,4 @@
 from flask import Flask,g,send_file,abort,request
-from werkzeug.utils import secure_filename
 from sqlite3 import connect
 from hashlib import sha256
 from time import time,sleep
@@ -24,7 +23,7 @@ def cleanup_robot():
 	while True:
 		db = connect(DATABASE)
 		cur = db.cursor()
-		results = cur.execute("SELECT url FROM links WHERE timestamp < ?",(time()-60,))
+		results = cur.execute("SELECT url FROM links WHERE timestamp < ?",(time()-(60*60*24),))
 		for row in results.fetchall():
 			cur.execute("DELETE FROM links WHERE url=?",(row[0],))
 			print('Robot deleted: {}'.format(row[0]))

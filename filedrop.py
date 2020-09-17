@@ -23,13 +23,15 @@ def cleanup_robot():
 	while True:
 		db = connect(DATABASE)
 		cur = db.cursor()
-		results = cur.execute("SELECT url FROM links WHERE timestamp < ?",(time()-(60*60*24),))
+		# select files older than 24 hours
+		results = cur.execute("SELECT url FROM links WHERE timestamp < ?",(time()-(86400),))
 		for row in results.fetchall():
 			cur.execute("DELETE FROM links WHERE url=?",(row[0],))
 			print('Robot deleted: {}'.format(row[0]))
 		db.commit()
 		db.close()
-		sleep(30)
+		# run again in one hour
+		sleep(3600)
 
 @app.route('/')
 def index():

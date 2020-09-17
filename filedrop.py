@@ -80,6 +80,8 @@ def get_file(filename):
 		return "ERROR 404"
 
 if __name__ == '__main__':
+	# start the cleaning robot to remove files older than 24 hours
 	bot = Thread(target=cleanup_robot,args=())
 	bot.start()
+	# start the flask app
 	app.run(host='0.0.0.0',port=5000)

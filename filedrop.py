@@ -26,6 +26,16 @@ def hash_file(data):
 def encode_url(data):
 	return urlsafe_b64encode(data).decode()
 
+def set_up():
+	if not exists(DATABASE):
+		sql = "CREATE TABLE links (url, hash, data, time_stamp, ext, filename, user_addr)"
+		db = connect(DATABASE)
+		cur = db.cursor()
+		cur.execute(sql)
+		db.commit()
+		print('Created NEW database...')
+		db.close()
+		
 def cleanup_robot():
 	while True:
 		db = connect(DATABASE)
@@ -77,6 +87,7 @@ def get_file(url):
 		return abort(404)
 
 if __name__ == '__main__':
+	setup()
 	bot = Thread(target=cleanup_robot,args=())
 	bot.start()
 	app.run(host='0.0.0.0',port=5000)
